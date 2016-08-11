@@ -39,16 +39,16 @@ exec_cmd 'apt-get install -y nodejs supervisor git libudev-dev'
 print_status "Installing unzip package"
 exec_cmd 'apt-get install unzip'
 
-print_status "Checking out aws-iot-ble-sensor..."
+print_status "Checking out aws-iot-ble-sensor-log..."
 cd /opt
 exec_cmd 'git clone https://github.com/hardyskapoor/aws-iot-ble-sensor-log.git'
 
 print_status "Installing aws-iot-ble-sensor dependencies..."
-cd /opt/aws-iot-ble-sensor
+cd /opt/aws-iot-ble-sensor-log
 exec_cmd 'npm install'
 
 print_status "unzip the certificates"
-exec_cmd '/boot/setup/aws-iot-cert.zip -d /boot/setup/aws-iot-cert'
+exec_cmd 'unzip /boot/setup/aws-iot-cert.zip -d /boot/setup/aws-iot-cert'
 
 
 print_status "Preparing /boot/setup/aws-iot-cert/ for the AWS IoT cert..."
@@ -94,5 +94,5 @@ print_status "Setting up Supervisor to startup and monitor aws-iot-ble-sensor...
 cat >/etc/supervisor/conf.d/aws-iot-ble-sensor.conf <<EOF
 [program:aws-iot-ble-sensor]
 directory=/opt/aws-iot-ble-sensor/
-command=/usr/bin/nodejs /opt/aws-iot-ble-sensor/aws-iot-ble-sensor.js -l
+command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l
 EOF
