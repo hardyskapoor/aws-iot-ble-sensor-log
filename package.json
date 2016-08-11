@@ -1,0 +1,21 @@
+{
+  "name": "aws-iot-ble-sensor",
+  "description": "AWS IoT Device app that continuously scans for and reports detected iBeacons",
+  "version" : "0.1.0",
+  "license": "BSD-2-Clause",
+  "author": {
+    "name": "Konstantinos Konstantinidis",
+    "email": "kkonstan@ianos.co.uk"
+  },
+  "main": "aws-iot-ble-sensor.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kkonstan/aws-iot-ble-sensor"
+  },
+  "dependencies": {
+    "aws-iot-device-sdk": "1.0.*",
+    "bleacon": "0.4.*",
+    "command-line-args": "2.1.*",
+    "rpi-gpio": "0.7.*"
+  }
+}
