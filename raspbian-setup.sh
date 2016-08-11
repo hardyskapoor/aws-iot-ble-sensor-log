@@ -2,7 +2,7 @@
 #
 # Script to install aws-iot-ble-sensor onto a Raspbian Jessie system.
 #
-# curl -sL https://raw.githubusercontent.com/kkonstan/aws-iot-ble-sensor/master/raspbian-setup.sh | sudo -E bash -
+# curl -sL https://raw.githubusercontent.com/hardyskapoor/aws-iot-ble-sensor-log/master/raspbian-setup.sh | sudo -E bash -
 #
 
 export DEBIAN_FRONTEND=noninteractive
