@@ -90,6 +90,7 @@ exec_cmd 'ln -s /opt/aws-iot-ble-evms/check-wifi /etc/cron.d/check-wifi'
 
 print_status "Setting up hostname to be derived from serial number..."
 rm -rf /etc/hostname
+rm -rf /etc/rcS.d/S00sethostname.sh
 cat >/etc/init.d/sethostname.sh <<EOF
 #!/bin/bash
 hostname `cat /proc/cpuinfo | grep Serial | awk -F ': ' '{ print $2 }' | sed -e "s/^0*/pi-/"`
