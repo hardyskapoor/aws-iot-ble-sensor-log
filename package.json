@@ -15,7 +15,9 @@
   "dependencies": {
     "aws-iot-device-sdk": "1.0.*",
     "bleacon": "0.4.*",
+    "hashmap": "2.0.*",
     "command-line-args": "2.1.*",
-    "rpi-gpio": "0.7.*"
+    "rpi-gpio": "0.7.*",
+    "email": "0.2.*"
   }
 }

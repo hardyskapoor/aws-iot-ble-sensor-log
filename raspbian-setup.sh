@@ -45,6 +45,11 @@ exec_cmd 'git clone https://github.com/hardyskapoor/aws-iot-ble-sensor-log.git'
 
 print_status "Installing aws-iot-ble-sensor dependencies..."
 cd /opt/aws-iot-ble-sensor-log
+
+print_status "Create log directory"
+exec_cmd 'mkdir logs'
+exec_cmd 'chomod 777 -R logs/'
+
 exec_cmd 'npm install'
 
 print_status "unzip the certificates"

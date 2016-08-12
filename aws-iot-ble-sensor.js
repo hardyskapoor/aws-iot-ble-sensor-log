@@ -1,6 +1,6 @@
 // AWS IoT Device app that continuously scans for and reports detected iBeacons
 
-var version = "0.1.0";
+var version = "0.2.2";
 
 
 
@@ -11,13 +11,31 @@ var version = "0.1.0";
 var commandLineArgs = require('command-line-args');
 
 var args = commandLineArgs([
-  { name: 'verbose', alias: 'v', type: Boolean, defaultValue: false },
+  { name: 'verbose', alias: 'v', type: Boolean, defaultValue: true },
+  { name: 'throttle', alias: 't', type: Boolean, defaultValue: false },
   { name: 'led', alias: 'l', type: Boolean, defaultValue: false },
 ])
+function GetFormattedDate() {
+    var todayTime = new Date();
+    var month = todayTime .getMonth() + 1;
+    var day = todayTime .getDate();
+    var year = todayTime .getFullYear();
+    var hours = todayTime .getHours();
+    var minutes = todayTime .getMinutes();
+    return month + "-" + day + "-" + year+" "+hours+"_00";
 
+}
+
+function addLog(message) {
+	var today = GetFormattedDate();
+	var logFile = '/opt/aws-iot-ble-sensor-log/logs/beacon-log-'+today+'.log';
+	var stream = fs.createWriteStream(logFile, {'flags': 'a'});
+	stream.write(message);
+	stream.end();
+}
 var options = args.parse()
 
-
+const fs = require('fs');
 
 //
 // Status LED blinking
@@ -92,18 +110,22 @@ const topicDetection = 'detection';
 
 // connect to AWS IoT
 var awsIot = require('aws-iot-device-sdk');
+//manager = levelStore('E:\nodejs\ascential\aws-iot-ble-sensor');
 const aws = awsIot.device({
     keyPath: './certs/private.pem.key',
     certPath: './certs/certificate.pem.crt',
     caPath: './certs/root-CA.crt',
-    region: 'eu-central-1',
+    region: 'eu-west-1',
     clientId: sensor,
     offlineQueueing: true,
     offlineQueueMaxSize: 0,
+		//incomingStore: manager.incoming,
+		//outgoingStore: manager.outgoing,
     drainTimeMs: 10
 });
 
-// publish a heartbeat every 5 seconds
+
+// publish a heartbeat every 60 seconds
 timeout = setInterval(function() {
 
     // prepare JSON message
@@ -118,12 +140,15 @@ timeout = setInterval(function() {
 
     // publish to the heartbeat topic
     aws.publish(topicHeartbeat, message, { qos: 1 });
-
+		//console.log(aws.getOfflineOperations().length);
     if (options.verbose) {
       // also log to console
+			//console.log(awsIot.offlineOperations);
+			//console.log(aws.offlineOperations);
       console.log(message);
+			addLog(message)
     }
-}, 5000);
+}, 1000);
 
 // event handlers
 aws
@@ -180,24 +205,45 @@ aws
 var ble = require('bleacon');
 ble.startScanning();
 
+if (options.throttle) {
+   var HashMap = require('hashmap');
+   var map = new HashMap();
+}
+
 // event handler
 ble
     .on('discover', function(beacon) {
 
-        // prepare JSON message
-        var message = JSON.stringify({
-            timestamp: new Date().toJSON(),
-            type: 'detection',
-            uuidmm: beacon.uuid + ':' + beacon.major + '/' + beacon.minor,
-            proximity: beacon.proximity,
-            sensor: sensor
-        });
+        discoverTimestamp = new Date();
+        var discoverUuidmm = beacon.uuid + ':' + beacon.major + '/' + beacon.minor
 
-        // publish to the detection topic
-        aws.publish(topicDetection, message, { qos: 1 });
+        if ((options.throttle) && ((discoverTimestamp - map.get(discoverUuidmm)) < 10000)) {
+          // ignore detections reported less than 10 seconds ago
 
-        if (options.verbose) {
-          // also log to console
-          console.log(message);
+          if (options.verbose) {
+            // also log to console
+            console.log('Ignoring ' + discoverUuidmm + ' last detected ' + (discoverTimestamp - map.get(discoverUuidmm)) + 'ms ago');
+          }
+        } else {
+          // prepare JSON message
+          var message = JSON.stringify({
+              timestamp: discoverTimestamp.toJSON().replace("T", " "),
+              type: 'detection',
+              uuidmm: discoverUuidmm,
+              proximity: beacon.proximity,
+              sensor: sensor
+          })
+
+          // publish to the detection topic
+          aws.publish(topicDetection, message, { qos: 1 });
+					addLog(message);
+          if (options.throttle) {
+            // update the timestamp of last publish for that uuidmm
+            map.set(discoverUuidmm, discoverTimestamp);
+          };
+          if (options.verbose) {
+            // also log to console
+            console.log(message);
+          }
         }
     });
