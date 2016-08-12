@@ -146,7 +146,7 @@ timeout = setInterval(function() {
 			//console.log(awsIot.offlineOperations);
 			//console.log(aws.offlineOperations);
       console.log(message);
-			addLog(message)
+			//addLog(message)
     }
 }, 1000);
 
