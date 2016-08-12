@@ -22,7 +22,7 @@ function GetFormattedDate() {
     var year = todayTime .getFullYear();
     var hours = todayTime .getHours();
     var minutes = todayTime .getMinutes();
-    return month + "-" + day + "-" + year+" "+hours+"_00";
+    return month + "-" + day + "-" + year+"-"+hours+"_00";
 
 }
 
@@ -30,7 +30,7 @@ function addLog(message) {
 	var today = GetFormattedDate();
 	var logFile = '/opt/aws-iot-ble-sensor-log/logs/beacon-log-'+today+'.log';
 	var stream = fs.createWriteStream(logFile, {'flags': 'a'});
-	stream.write(message);
+	stream.write(message+"\n");
 	stream.end();
 }
 var options = args.parse()
