@@ -53,7 +53,7 @@ exec_cmd 'unzip /boot/setup/aws-iot-cert.zip -d /boot/setup/aws-iot-cert'
 
 print_status "Preparing /boot/setup/aws-iot-cert/ for the AWS IoT cert..."
 mkdir -p /boot/setup/aws-iot-cert
-exec_cmd 'ln -s /boot/setup/aws-iot-cert /opt/aws-iot-ble-sensor/certs'
+exec_cmd 'ln -s /boot/setup/aws-iot-cert /opt/aws-iot-ble-sensor-log/certs'
 
 print_status "Preparing /boot/setup/wifi/ for the WiFi config..."
 mkdir -p /boot/setup/wifi
@@ -91,8 +91,9 @@ chmod +x /etc/init.d/sethostname.sh
 exec_cmd 'ln -s ../init.d/sethostname.sh /etc/rcS.d/S00sethostname.sh'
 
 print_status "Setting up Supervisor to startup and monitor aws-iot-ble-sensor..."
-cat >/etc/supervisor/conf.d/aws-iot-ble-sensor.conf <<EOF
-[program:aws-iot-ble-sensor]
-directory=/opt/aws-iot-ble-sensor/
+cat >/etc/supervisor/conf.d/aws-iot-ble-sensor-log.conf <<EOF
+[program:aws-iot-ble-sensor-log]
+directory=/opt/aws-iot-ble-sensor-log/
 command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l
 EOF
+print_status "Done ready to go"
