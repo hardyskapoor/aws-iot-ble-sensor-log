@@ -148,7 +148,7 @@ timeout = setInterval(function() {
       console.log(message);
 			//addLog(message)
     }
-}, 1000);
+}, 60000);
 
 // event handlers
 aws
