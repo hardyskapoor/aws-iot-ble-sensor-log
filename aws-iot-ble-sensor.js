@@ -11,8 +11,8 @@ var version = "0.2.2";
 var commandLineArgs = require('command-line-args');
 
 var args = commandLineArgs([
-  { name: 'verbose', alias: 'v', type: Boolean, defaultValue: true },
-  { name: 'throttle', alias: 't', type: Boolean, defaultValue: false },
+  { name: 'verbose', alias: 'v', type: Boolean, defaultValue: false },
+  { name: 'throttle', alias: 't', type: Boolean, defaultValue: true },
   { name: 'led', alias: 'l', type: Boolean, defaultValue: false },
 ])
 function GetFormattedDate() {

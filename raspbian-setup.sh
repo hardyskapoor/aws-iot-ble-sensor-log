@@ -103,6 +103,6 @@ print_status "Setting up Supervisor to startup and monitor aws-iot-ble-sensor...
 cat >/etc/supervisor/conf.d/aws-iot-ble-sensor-log.conf <<EOF
 [program:aws-iot-ble-sensor-log]
 directory=/opt/aws-iot-ble-sensor-log/
-command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l
+command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l -t
 EOF
 print_status "Done ready to go"
