@@ -28,7 +28,7 @@ function GetFormattedDate() {
 
 function addLog(message) {
 	var today = GetFormattedDate();
-	var logFile = '/opt/aws-iot-ble-sensor-log/logs/beacon-log-'+today+'.log';
+	var logFile = '/opt/aws-iot-ble-sensor-log/logs/pi-'+sensor+'-log-'+today+'.log';
 	var stream = fs.createWriteStream(logFile, {'flags': 'a'});
 	stream.write(message+"\n");
 	stream.end();
