@@ -230,7 +230,7 @@ ble
               timestamp: discoverTimestamp.toJSON().replace("T", " "),
               type: 'detection',
               uuidmm: discoverUuidmm,
-              measuredPower: beacon.measuredPower,
+              measuredpower: beacon.measuredPower,
               rssi: beacon.rssi,
               accuracy: beacon.accuracy,
               proximity: beacon.proximity,
