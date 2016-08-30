@@ -99,6 +99,7 @@ cp /opt/aws-iot-ble-evms/ssh/id_rsa.pub id_rsa.pub
 print_status "change permission id_rsa"
 chmod 600 id_rsa
 cd /
+chmod +x /opt/aws-iot-ble-evms/log-sync.sh
 print_status "Removing old log-sync cronbjob"
 rm -rf /etc/cron.d/log-sync
 
