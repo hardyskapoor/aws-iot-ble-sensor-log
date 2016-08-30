@@ -87,6 +87,26 @@ rm -rf /etc/cron.d/check-wifi
 print_status "Setting up new cronjob for wifi rebooter"
 exec_cmd 'ln -s /opt/aws-iot-ble-evms/check-wifi /etc/cron.d/check-wifi'
 
+print_status "Setting up cron for rsync started"
+print_status "create ssh folder"
+cd /home/pi
+rm -rf .ssh
+mkdir .ssh
+chmod 777 .ssh
+cd .ssh
+cp /opt/aws-iot-ble-evms/ssh/id_rsa id_rsa
+cp /opt/aws-iot-ble-evms/ssh/id_rsa.pub id_rsa.pub
+print_status "change permission id_rsa"
+chmod 600 id_rsa
+cd /
+print_status "Removing old log-sync cronbjob"
+rm -rf /etc/cron.d/log-sync
+
+print_status "setting up sync cron"
+exec_cmd 'ln -s /opt/aws-iot-ble-evms/log-sync /etc/cron.d/log-sync'
+
+print_status "Setting up cron for rsync finished"
+
 
 print_status "Setting up hostname to be derived from serial number..."
 rm -rf /etc/hostname
