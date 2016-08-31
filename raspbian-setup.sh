@@ -50,7 +50,7 @@ cd /opt/aws-iot-ble-sensor-log
 
 print_status "Create log directory"
 mkdir logs
-chomod -R 777 logs/
+chmod -R 777 logs/
 
 exec_cmd 'npm install'
 
