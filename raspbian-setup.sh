@@ -89,16 +89,14 @@ exec_cmd 'ln -s /opt/aws-iot-ble-evms/check-wifi /etc/cron.d/check-wifi'
 
 print_status "Setting up cron for rsync started"
 print_status "create ssh folder"
-cd /home/pi
-rm -rf .ssh
+rm -rf /root/.ssh
 mkdir .ssh
-chmod 777 .ssh
-cd .ssh
-cp /opt/aws-iot-ble-evms/ssh/id_rsa id_rsa
-cp /opt/aws-iot-ble-evms/ssh/id_rsa.pub id_rsa.pub
+#chmod 777 .ssh
+cp /opt/aws-iot-ble-evms/ssh/id_rsa /root/.ssh/id_rsa
+cp /opt/aws-iot-ble-evms/ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 print_status "change permission id_rsa"
-chmod 600 id_rsa
-cd /
+chmod 600 /root/.ssh/id_rsa
+
 chmod +x /opt/aws-iot-ble-evms/log-sync.sh
 print_status "Removing old log-sync cronbjob"
 rm -rf /etc/cron.d/log-sync
