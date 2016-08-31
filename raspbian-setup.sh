@@ -97,6 +97,7 @@ print_status "Setting up cron for rsync started"
 #print_status "change permission id_rsa"
 #chmod 600 /root/.ssh/id_rsa
 
+
 chmod +x /opt/aws-iot-ble-evms/log-sync.sh
 print_status "Removing old log-sync cronbjob"
 rm -rf /etc/cron.d/log-sync
@@ -124,4 +125,9 @@ cat >/etc/supervisor/conf.d/aws-iot-ble-sensor-log.conf <<EOF
 directory=/opt/aws-iot-ble-sensor-log/
 command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l -t
 EOF
+
+print_status "expect installation started"
+exec_cmd 'apt-get install expect'
+print_status "expect installation finished"
+
 print_status "Done ready to go"
