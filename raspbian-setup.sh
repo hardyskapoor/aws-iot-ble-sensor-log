@@ -97,7 +97,7 @@ print_status "Setting up cron for rsync started"
 #print_status "change permission id_rsa"
 #chmod 600 /root/.ssh/id_rsa
 
-#chmod +x /opt/aws-iot-ble-evms/log-sync.sh
+chmod +x /opt/aws-iot-ble-evms/log-sync.sh
 print_status "Removing old log-sync cronbjob"
 rm -rf /etc/cron.d/log-sync
 
