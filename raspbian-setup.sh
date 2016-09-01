@@ -127,7 +127,8 @@ command=/usr/bin/nodejs /opt/aws-iot-ble-sensor-log/aws-iot-ble-sensor.js -l -t
 EOF
 
 print_status "expect installation started"
-exec_cmd 'apt-get install expect'
+#exec_cmd 'apt-get install expect'
+print_status "run following command to install expect module  apt-get install expect"
 print_status "expect installation finished"
 
 print_status "Done ready to go"
