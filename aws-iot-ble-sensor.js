@@ -135,6 +135,8 @@ timeout = setInterval(function() {
 			log.remove(discoverUuidmm);
 		});
 		stream.end();
+	}catch (err) {
+		console.log("Failed to write");
 	}
 }, 5000);
 
