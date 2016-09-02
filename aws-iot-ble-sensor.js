@@ -130,7 +130,7 @@ timeout = setInterval(function() {
 		var today = GetFormattedDate();
 		var logFile = '/opt/aws-iot-ble-sensor-log/logs/'+sensor+'-log-'+today+'.log';
 		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
-		log.forEach(function(discoverUuidmm, message) {
+		log.forEach(function(message, discoverUuidmm) {
 			stream.write(message+"\n");
 			log.remove(discoverUuidmm);
 		});
