@@ -124,6 +124,19 @@ const aws = awsIot.device({
     drainTimeMs: 10
 });
 
+//update the log in file every 5 seconds
+timeout = setInterval(function() {
+	try {
+		var today = GetFormattedDate();
+		var logFile = '/opt/aws-iot-ble-sensor-log/logs/'+sensor+'-log-'+today+'.log';
+		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
+		log.forEach(function(discoverUuidmm, message) {
+			stream.write(message+"\n");
+			log.remove(discoverUuidmm);
+		});
+		stream.end();
+	}
+}, 5000);
 
 // publish a heartbeat every 60 seconds
 timeout = setInterval(function() {
@@ -208,6 +221,7 @@ ble.startScanning();
 if (options.throttle) {
    var HashMap = require('hashmap');
    var map = new HashMap();
+	 var log = new HashMap();
 }
 
 // event handler
@@ -239,10 +253,11 @@ ble
 
           // publish to the detection topic
           aws.publish(topicDetection, message, { qos: 1 });
-					addLog(message);
+					//addLog(message);
           if (options.throttle) {
             // update the timestamp of last publish for that uuidmm
             map.set(discoverUuidmm, discoverTimestamp);
+            log.set(discoverUuidmm, message);
           };
           if (options.verbose) {
             // also log to console
