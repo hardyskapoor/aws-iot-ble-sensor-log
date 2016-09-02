@@ -136,6 +136,7 @@ timeout = setInterval(function() {
 		});
 		stream.end();
 	}catch (err) {
+		console.log(err);
 		console.log("Failed to write");
 	}
 }, 5000);
