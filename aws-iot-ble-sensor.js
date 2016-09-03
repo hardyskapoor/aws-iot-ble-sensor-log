@@ -132,7 +132,7 @@ timeout = setInterval(function() {
 		var today = GetFormattedDate();
 		var logFile = '/opt/aws-iot-ble-sensor-log/logs/'+sensor+'-log-'+today+'.log';
 		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
-    steam.on('error', function(err) {
+    stream.on('error', function(err) {
       console.log(err);
     });
 		log.forEach(function(message, discoverUuidmm) {
