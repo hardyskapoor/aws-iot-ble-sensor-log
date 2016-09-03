@@ -124,19 +124,24 @@ const aws = awsIot.device({
     drainTimeMs: 10
 });
 
+var HashMap = require('hashmap');
+var log = new HashMap();
 //update the log in file every 5 seconds
 timeout = setInterval(function() {
 	try {
 		var today = GetFormattedDate();
 		var logFile = '/opt/aws-iot-ble-sensor-log/logs/'+sensor+'-log-'+today+'.log';
 		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
+    steam.on('error', function(err) {
+      console.log(err);
+    });
 		log.forEach(function(message, discoverUuidmm) {
 			stream.write(message+"\n");
 			log.remove(discoverUuidmm);
 		});
 		stream.end();
-	}catch (err) {
-		console.log(err);
+	}catch (ex) {
+		console.log(ex);
 		console.log("Failed to write");
 	}
 }, 5000);
@@ -222,9 +227,7 @@ var ble = require('bleacon');
 ble.startScanning();
 
 if (options.throttle) {
-   var HashMap = require('hashmap');
-   var map = new HashMap();
-	 var log = new HashMap();
+	 var map = new HashMap();
 }
 
 // event handler
