@@ -161,6 +161,14 @@ timeout = setInterval(function() {
 
     // publish to the heartbeat topic
     aws.publish(topicHeartbeat, message, { qos: 1 });
+    //write heartbeat message to log file
+    var logFile = '/opt/aws-iot-ble-sensor-log/logs/heartbeat.log';
+		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
+    stream.on('error', function(err) {
+      console.log(err);
+    });
+		stream.write(message+"\n");
+		stream.end();
 		//console.log(aws.getOfflineOperations().length);
     if (options.verbose) {
       // also log to console
