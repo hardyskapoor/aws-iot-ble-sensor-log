@@ -266,7 +266,7 @@ ble
           })
 
           // publish to the detection topic
-          aws.publish(topicDetection, message, { qos: 1 });
+          //aws.publish(topicDetection, message, { qos: 1 });
 					//addLog(message);
           if (options.throttle) {
             // update the timestamp of last publish for that uuidmm

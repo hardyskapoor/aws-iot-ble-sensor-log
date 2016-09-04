@@ -66,7 +66,8 @@ var sensors = {
 // use the hostname to identify this instance of the monitor
 var os = require('os');
 const monitor = os.hostname().split('.').shift() + '-monitor';
-const mailFrom = 'monitor@' + os.hostname();
+//const mailFrom = 'monitor@' + os.hostname();
+const mailFrom = 'autumnfair-pistatus@eagle-view.co.uk';
 
 // use this topic for heartbeats
 const topicHeartbeat = 'heartbeat';
