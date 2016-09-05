@@ -56,7 +56,7 @@ var led_switch=0;
 // set the blink frequency
 var blink_on = 10;
 var blink_off = 4990;
-
+options.led = false;
 if (options.led) {
   try {
      var gpio = require('rpi-gpio');
@@ -107,7 +107,7 @@ const topicHeartbeat = 'heartbeat';
 
 // use this topic for detections
 const topicDetection = 'detection';
-
+/*
 // connect to AWS IoT
 var awsIot = require('aws-iot-device-sdk');
 //manager = levelStore('E:\nodejs\ascential\aws-iot-ble-sensor');
@@ -123,7 +123,7 @@ const aws = awsIot.device({
 		//outgoingStore: manager.outgoing,
     drainTimeMs: 10
 });
-
+*/
 var HashMap = require('hashmap');
 var log = new HashMap();
 //update the log in file every 5 seconds
@@ -160,7 +160,7 @@ timeout = setInterval(function() {
     })
 
     // publish to the heartbeat topic
-    aws.publish(topicHeartbeat, message, { qos: 1 });
+    //aws.publish(topicHeartbeat, message, { qos: 1 });
     //write heartbeat message to log file
     var logFile = '/opt/aws-iot-ble-sensor-log/logs/heartbeat.log';
 		var stream = fs.createWriteStream(logFile, {'flags': 'a'});
@@ -178,7 +178,7 @@ timeout = setInterval(function() {
 			//addLog(message)
     }
 }, 60000);
-
+/*
 // event handlers
 aws
     .on('connect', function() {
@@ -226,7 +226,7 @@ aws
     });
 
 
-
+*/
 //
 // iBeacon scanning
 //
