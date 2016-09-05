@@ -56,7 +56,7 @@ var led_switch=0;
 // set the blink frequency
 var blink_on = 10;
 var blink_off = 4990;
-options.led = false;
+//options.led = false;
 if (options.led) {
   try {
      var gpio = require('rpi-gpio');
@@ -264,7 +264,7 @@ ble
               proximity: beacon.proximity,
               sensor: sensor
           })
-
+          led_switch=led_b;
           // publish to the detection topic
           //aws.publish(topicDetection, message, { qos: 1 });
 					//addLog(message);
