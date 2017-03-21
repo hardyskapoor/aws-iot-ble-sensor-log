@@ -107,10 +107,10 @@ const topicHeartbeat = 'heartbeat';
 
 // use this topic for detections
 const topicDetection = 'detection';
-/*
+
 // connect to AWS IoT
 var awsIot = require('aws-iot-device-sdk');
-//manager = levelStore('E:\nodejs\ascential\aws-iot-ble-sensor');
+
 const aws = awsIot.device({
     keyPath: './certs/private.pem.key',
     certPath: './certs/certificate.pem.crt',
@@ -123,7 +123,7 @@ const aws = awsIot.device({
 		//outgoingStore: manager.outgoing,
     drainTimeMs: 10
 });
-*/
+
 var HashMap = require('hashmap');
 var log = new HashMap();
 //update the log in file every 5 seconds
@@ -152,7 +152,7 @@ timeout = setInterval(function() {
     // prepare JSON message
     var message = JSON.stringify({
         timestamp: new Date().toJSON(),
-        type: 'heartbeat',
+        type: 'pihb',
         version: version,
         uptime: os.uptime(),
         loadavg: os.loadavg(),
@@ -178,7 +178,7 @@ timeout = setInterval(function() {
 			//addLog(message)
     }
 }, 60000);
-/*
+
 // event handlers
 aws
     .on('connect', function() {
@@ -226,7 +226,7 @@ aws
     });
 
 
-*/
+
 //
 // iBeacon scanning
 //
@@ -256,7 +256,9 @@ ble
           // prepare JSON message
           var message = JSON.stringify({
               timestamp: discoverTimestamp.toJSON().replace("T", " "),
-              type: 'detection',
+              type: 'pi',
+              probetime:discoverTimestamp.toJSON().replace("T", " "),
+              probetime_gmt:discoverTimestamp.toJSON().replace("T", " "),
               uuidmm: discoverUuidmm,
               measuredpower: beacon.measuredPower,
               rssi: beacon.rssi,
@@ -265,7 +267,7 @@ ble
               sensor: sensor
           })
           // publish to the detection topic
-          //aws.publish(topicDetection, message, { qos: 1 });
+          aws.publish(topicDetection, message, { qos: 1 });
 					//addLog(message);
           if (options.throttle) {
             // update the timestamp of last publish for that uuidmm
