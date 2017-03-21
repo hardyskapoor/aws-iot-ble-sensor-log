@@ -106,7 +106,7 @@ const sensor = os.hostname().split('.').shift();
 const topicHeartbeat = 'heartbeat';
 
 // use this topic for detections
-const topicDetection = 'detection';
+const topicDetection = 'ble-wifi';
 
 // connect to AWS IoT
 var awsIot = require('aws-iot-device-sdk');
