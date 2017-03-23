@@ -243,7 +243,7 @@ ble
     .on('discover', function(beacon) {
 
         discoverTimestamp = new Date();
-        var discoverUuidmm = beacon.uuid + ':' + beacon.major + '/' + beacon.minor
+        var discoverUuidmm = beacon.uuid.toUpperCase() + ':' + beacon.major + '/' + beacon.minor
 
         if ((options.throttle) && ((discoverTimestamp - map.get(discoverUuidmm)) < 10000)) {
           // ignore detections reported less than 10 seconds ago
