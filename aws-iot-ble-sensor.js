@@ -240,6 +240,7 @@ if (options.throttle) {
 }
 
 // event handler
+var i =0;
 ble
     .on('discover', function(beacon) {
 
@@ -271,9 +272,11 @@ ble
           //aws.publish(topicDetection, message, { qos: 1 });
 					//addLog(message);
           if (options.throttle) {
+              i++;
+              i = i > 5000 ? 0 :  i;
             // update the timestamp of last publish for that uuidmm
             map.set(discoverUuidmm, discoverTimestamp);
-            log.set(discoverUuidmm, message);
+            log.set(discoverUuidmm+i, message);
           };
           if (options.verbose) {
             // also log to console
