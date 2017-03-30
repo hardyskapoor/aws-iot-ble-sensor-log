@@ -110,7 +110,7 @@ const topicDetection = 'ble-wifi';
 
 // connect to AWS IoT
 var awsIot = require('aws-iot-device-sdk');
-
+/*
 const aws = awsIot.device({
     keyPath: './certs/private.pem.key',
     certPath: './certs/certificate.pem.crt',
@@ -122,7 +122,7 @@ const aws = awsIot.device({
 		//incomingStore: manager.incoming,
 		//outgoingStore: manager.outgoing,
     drainTimeMs: 10
-});
+});*/
 
 var HashMap = require('hashmap');
 var log = new HashMap();
@@ -180,6 +180,7 @@ timeout = setInterval(function() {
 }, 60000);
 
 // event handlers
+/*
 aws
     .on('connect', function() {
         console.log('AWS IoT Device Gateway: Connected');
@@ -226,7 +227,7 @@ aws
     });
 
 
-
+*/
 //
 // iBeacon scanning
 //
@@ -267,7 +268,7 @@ ble
               sensor: sensor
           })
           // publish to the detection topic
-          aws.publish(topicDetection, message, { qos: 1 });
+          //aws.publish(topicDetection, message, { qos: 1 });
 					//addLog(message);
           if (options.throttle) {
             // update the timestamp of last publish for that uuidmm
